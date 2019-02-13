@@ -132,74 +132,71 @@ def transpose(mat):
 
 
 def cover_up(mat):
-    new = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
-    done = False
-    for i in range(4):
-        count = 0
-        for j in range(4):
-            if mat[i][j] != 0:
-                new[i][count] = mat[i][j]
-                if j != count:
-                    done = True
-                count += 1
-    return (new, done)
-
+    # new=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    new = [[0]*len(mat) for _ in range(len(mat))]
+    done=False
+    for i in range(len(mat[0])):
+        count=0
+        for j in range(len(mat[0])):
+            if mat[i][j]!=0:
+                new[i][count]=mat[i][j]
+                if j!=count:
+                    done=True
+                count+=1
+    return (new,done)
 
 def merge(mat):
-    done = False
-    for i in range(4):
-        for j in range(3):
-            if mat[i][j] == mat[i][j+1] and mat[i][j] != 0:
-                mat[i][j] *= 2
-                mat[i][j+1] = 0
-                done = True
-    return (mat, done)
+    done=False
+    for i in range(len(mat)):
+         for j in range(len(mat)-1):
+             if mat[i][j]==mat[i][j+1] and mat[i][j]!=0:
+                 mat[i][j]*=2
+                 mat[i][j+1]=0
+                 done=True
+    return (mat,done)
 
 
 def up(game):
-    print("up")
-    # return matrix after shifting up
-    game = transpose(game)
-    game, done = cover_up(game)
-    temp = merge(game)
-    game = temp[0]
-    done = done or temp[1]
-    game = cover_up(game)[0]
-    game = transpose(game)
-    return (game, done)
-
+        # print("up")
+        # return matrix after shifting up
+        game=transpose(game)
+        game,done=cover_up(game)
+        temp=merge(game)
+        game=temp[0]
+        done=done or temp[1]
+        game=cover_up(game)[0]
+        game=transpose(game)
+        return (game,done)
 
 def down(game):
-    print("down")
-    game = reverse(transpose(game))
-    game, done = cover_up(game)
-    temp = merge(game)
-    game = temp[0]
-    done = done or temp[1]
-    game = cover_up(game)[0]
-    game = transpose(reverse(game))
-    return (game, done)
-
+        # print("down")
+        game=reverse(transpose(game))
+        game,done=cover_up(game)
+        temp=merge(game)
+        game=temp[0]
+        done=done or temp[1]
+        game=cover_up(game)[0]
+        game=transpose(reverse(game))
+        return (game,done)
 
 def left(game):
-    print("left")
-    # return matrix after shifting left
-    game, done = cover_up(game)
-    temp = merge(game)
-    game = temp[0]
-    done = done or temp[1]
-    game = cover_up(game)[0]
-    return (game, done)
-
+        # print("left")
+        # return matrix after shifting left
+        game,done=cover_up(game)
+        temp=merge(game)
+        game=temp[0]
+        done=done or temp[1]
+        game=cover_up(game)[0]
+        return (game,done)
 
 def right(game):
-    print("right")
-    # return matrix after shifting right
-    game = reverse(game)
-    game, done = cover_up(game)
-    temp = merge(game)
-    game = temp[0]
-    done = done or temp[1]
-    game = cover_up(game)[0]
-    game = reverse(game)
-    return (game, done)
+        # print("right")
+        # return matrix after shifting right
+        game=reverse(game)
+        game,done=cover_up(game)
+        temp=merge(game)
+        game=temp[0]
+        done=done or temp[1]
+        game=cover_up(game)[0]
+        game=reverse(game)
+        return (game,done)
